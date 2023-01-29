@@ -1,10 +1,6 @@
 import os
 import shutil
-import json
-import logging
 import uuid
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
 from selenium import webdriver
 
 
@@ -71,25 +67,12 @@ def init_web_driver():
 
 def lambda_handler(event, context):
     try:
-        result = "init driver"
         driver = init_web_driver()
-
-        result = "find element in google"
-        searchbar = driver.find_element(By.NAME, "q")
-        print(result)
-
-        searchbar.clear()
-        searchbar.send_keys('Starbucks 1912 pike place')
-        searchbar.send_keys(Keys.ENTER)
-
-        result = "get the phone number and screenshot"
-        print(result)
-
-        result = driver.find_element(
-            By.XPATH, '//*[@id="result-stats"]').text
-
+        result = "init driver"
+        driver.get("http://www.google.com")
+        result = "get website"
+        result = driver.title
         driver.quit()
-
     except Exception as e:
         result = str(e)
         result = '(!) Exception: ' + result
